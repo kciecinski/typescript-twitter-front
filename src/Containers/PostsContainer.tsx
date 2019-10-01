@@ -1,21 +1,11 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
-
+import PostInterface from '../Interfaces/PostInterface'
+import Post from '../Components/Post'
+import { Columns } from 'bloomer';
 const PostsContainer : React.FC = () => {
 
-  interface User {
-    _id: string,
-    email: string
-  }
-
-  interface Post {
-    _id: string,
-    user: User,
-    text: string,
-    __v: string
-  }
-
-  const [posts, setPosts] = useState<Post[]>([]);
+  const [posts, setPosts] = useState<PostInterface[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,10 +20,11 @@ const PostsContainer : React.FC = () => {
   },[])
   return (
     <div>
-
-      {posts.map((post) => {
-        return post.text
-      })}
+      <Columns isCentered>
+        {posts.map((post) => {
+          return <Post {...post} key={post._id}></Post>
+        })}
+      </Columns>
     </div>
   )
 }
